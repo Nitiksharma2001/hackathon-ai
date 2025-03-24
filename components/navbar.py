@@ -11,7 +11,7 @@ navbar = html.Div(
     [
         html.Div(dmc.NavLink(label=dmc.Title("God Of AI"), href='/')),
         html.Div([ 
-            dmc.NavLink(label=route['title'], href=route['link'], style={'text-wrap': 'nowrap'} ) for route in routes 
+            dmc.NavLink(label=dmc.Text(route['title'], size='lg'), href=route['link'], style={'text-wrap': 'nowrap'} ) for route in routes 
         ], style={'display': 'flex'})
     ],
     style={'display': 'flex', 'padding': '8px', 'justify-content': 'space-between'}

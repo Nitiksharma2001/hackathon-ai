@@ -16,14 +16,16 @@ upload_file_layout = dmc.Container([
         ]
     ),
     dmc.Space(h="xl"),
-    dcc.Upload(
-        id='upload-data',
-        children=dmc.Button("Upload File"),
-        multiple=False  # Set to True if you want to allow multiple files
-    ),
     html.Div(id='response-check'),
-    dmc.Space(h="xl"),
-    dmc.Button("Check", id='submit-image'),
+    dmc.Group(
+        [
+            dcc.Upload(
+                id='upload-data',
+                children=dmc.Button("Upload File"),
+                multiple=False  # Set to True if you want to allow multiple files
+            ),
+            dmc.Button("Check", id='submit-image')
+        ])
 ])
 
 @callback(
