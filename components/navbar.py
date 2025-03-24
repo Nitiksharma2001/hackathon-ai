@@ -9,7 +9,7 @@ def get_icon(icon):
 
 navbar = html.Div(
     [
-        html.Div(dmc.NavLink(label=dmc.Title("God Of AI"), href='/')),
+        html.Div(dmc.NavLink(label=dmc.Title("God Of AI"), rightSection=get_icon('mingcute/ai-fill'), href='/')),
         html.Div([ 
             dmc.NavLink(label=dmc.Text(route['title'], size='lg'), href=route['link'], style={'text-wrap': 'nowrap'} ) for route in routes 
         ], style={'display': 'flex'})
