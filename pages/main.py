@@ -1,4 +1,5 @@
 from dash import dcc, html, State, Input, Output, callback
+from dash.exceptions import PreventUpdate
 import dash_mantine_components as dmc
 import base64, io, time
 from PIL import Image
@@ -6,7 +7,7 @@ import numpy as np
 from dash_iconify import DashIconify
 
 # Layout of the app
-upload_file_layout = dmc.Container([
+upload_file = dmc.Container([
     dmc.Title(
         children = [
             "Upload your file to check whether it's ",
@@ -25,18 +26,38 @@ upload_file_layout = dmc.Container([
             dmc.Button("Check", id='submit-image')
     ]),
     html.Div(id='response-check'),
+    html.Div(id='uploaded-image'),
 ])
 
 @callback(
-    Output('upload-file', 'children'),
-    Input('upload-data', 'filename'), 
+    [Output('upload-file', 'children'), Output('uploaded-image', 'children')], 
+    Input('upload-data', 'filename'), State('upload-data', 'contents'), 
     prevent_initial_call=True
 )
-def display_file(file_name):
+def display_file(file_name, contents):
     if file_name is None:    
-        return "No file uploaded"
+        return "No file uploaded", PreventUpdate
     
-    return file_name
+    _, content_string = contents.split(',')
+    
+    # Decode the base64 string
+    decoded_image = base64.b64decode(content_string)
+    
+    # Open the image
+    image = Image.open(io.BytesIO(decoded_image))
+    
+    # Re-encode the image into base64 to display it
+    buffer = io.BytesIO()
+    image.save(buffer, format="PNG")
+    encoded_image = base64.b64encode(buffer.getvalue()).decode()
+    
+    return file_name, dmc.Image(
+                        radius="lg",
+                        m='sm',
+                        h=300,
+                        w=300,
+                        src=f"data:image/png;base64,{encoded_image}",
+                    )
 
 @callback(
     Output('response-check', 'children'),
@@ -60,4 +81,4 @@ def display_file(_, contents):
     image_array = np.array(image) / 255.0  # Normalize the image
     image_array = np.expand_dims(image_array, axis=0) 
 
-    return 'ai'
+    return dmc.Text('image is ai', c='green')
