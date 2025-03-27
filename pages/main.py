@@ -10,19 +10,22 @@ upload_file = dmc.Container([
     dmc.Title(
         children = [
             "Upload your file to check whether it's ",
-            dmc.Text("AI Generated", span=True, c="blue", inherit=True),
+            dmc.Text("AI Generated", span=True, c="orange", inherit=True),
             " or not."
         ]
     ),
     dmc.Space(h="xl"),
-    dcc.Upload(
-        id='upload-data',
-        children=dmc.Button("Upload File"),
-        multiple=False  # Set to True if you want to allow multiple files
-    ),
+    dmc.Group(
+        [
+            dcc.Upload(
+                id='upload-data',
+                children=[dmc.Button("Upload File",color='#6dcdb8', leftSection=DashIconify(icon="material-symbols:upload"), id='upload-file')],
+                multiple=False
+            ),
+            dmc.Button("Check", id='submit-image', color='#6dcdb8')
+    ]),
+    html.Div(id='uploaded-image'),
     html.Div(id='response-check'),
-    dmc.Space(h="xl"),
-    dmc.Button("Check", id='submit-image'),
 ])
 
 @callback(
@@ -44,7 +47,7 @@ def display_file(file_name, contents):
     image.save(buffer, format="PNG")
     
     encoded_image = base64.b64encode(buffer.getvalue()).decode()
-    return dmc.Image( radius="lg", m='sm', h=300, w=300, src=f"data:image/png;base64,{encoded_image}"), no_update
+    return dmc.Image( radius="lg", m='sm', h=300, w=300, src=f"data:image/png;base64,{encoded_image}"), dmc.Text('')
 
 @callback(
     Output('response-check', 'children'),
