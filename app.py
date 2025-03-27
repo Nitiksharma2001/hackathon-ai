@@ -14,7 +14,7 @@ layout = dmc.AppShell(
                 [
                     dmc.Burger(id="burger", size="sm", hiddenFrom="sm", opened=False),
                     dmc.Image(src='/assets/logo.png', h=50, visibleFrom="sm"),
-                    dmc.NavLink(label=dmc.Title("Quantum Sparks", c="blue"), href='/', style={'textWrap': 'nowrap', 'zIndex': 100},),
+                    dmc.NavLink(label=dmc.Title("BYTE BATTLEGROUND", c="orange"), href='/', style={'textWrap': 'nowrap', 'zIndex': 100},),
                 ],
                 h="100%",
                 px="md",
@@ -33,7 +33,7 @@ layout = dmc.AppShell(
     header={"height": 60},
     padding="md",
     navbar={
-        "width": 300,
+        "width": 250,
         "breakpoint": "sm",
         "collapsed": {"mobile": True},
     },

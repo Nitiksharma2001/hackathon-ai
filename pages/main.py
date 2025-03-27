@@ -11,7 +11,7 @@ upload_file = dmc.Container([
     dmc.Title(
         children = [
             "Upload your file to check whether it's ",
-            dmc.Text("AI Generated", span=True, c="blue", inherit=True),
+            dmc.Text("AI Generated", span=True, c="orange", inherit=True),
             " or not."
         ]
     ),
@@ -20,13 +20,13 @@ upload_file = dmc.Container([
         [
             dcc.Upload(
                 id='upload-data',
-                children=[dmc.Button("Upload File", leftSection=DashIconify(icon="material-symbols:upload"), id='upload-file')],
-                multiple=False  # Set to True if you want to allow multiple files
+                children=[dmc.Button("Upload File",color='#6dcdb8', leftSection=DashIconify(icon="material-symbols:upload"), id='upload-file')],
+                multiple=False
             ),
-            dmc.Button("Check", id='submit-image')
+            dmc.Button("Check", id='submit-image', color='#6dcdb8')
     ]),
-    html.Div(id='response-check'),
     html.Div(id='uploaded-image'),
+    html.Div(id='response-check'),
 ])
 
 @callback(
@@ -81,4 +81,4 @@ def display_file(_, contents):
     image_array = np.array(image) / 255.0  # Normalize the image
     image_array = np.expand_dims(image_array, axis=0) 
 
-    return dmc.Text('image is ai', c='green')
+    return dmc.Text(["Uploaded Image is ", dmc.Text("AI Generated", span=True, inherit=True, fw='700', size='xl')], c='red', size='lg')
